@@ -20,8 +20,8 @@ class SingleBook extends Component {
           <Card.Body>
             <Card.Title className="text-truncate">{book.title}</Card.Title>
             <Card.Text>{`Price: ${book.price}€`}</Card.Text>
+            {this.state.selectedBook && <CommentArea book={book} />}
           </Card.Body>
-          {this.state.selectedBook && <CommentArea book={book} />}
         </Card>
       </Col>
     );

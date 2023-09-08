@@ -5,6 +5,7 @@ import CommentList from "./CommentList";
 class CommentArea extends Component {
   state = {
     commentsWithRate: [],
+    asin: this.props.book.asin,
   };
   fetchComments = async () => {
     const elementId = this.props.book.asin;
@@ -13,20 +14,27 @@ class CommentArea extends Component {
         method: "GET",
         headers: {
           Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGU4NTNlZGMwMzRmZjAwMTQwM2Y0ZDYiLCJpYXQiOjE2OTQwOTA4OTAsImV4cCI6MTY5NTMwMDQ5MH0.0QZCufRskLujb0pWmIhjTjJDmIdZhir-6fJ-6lllhTo",
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGU4NTNlZGMwMzRmZjAwMTQwM2Y0ZDYiLCJpYXQiOjE2OTQxNTQ2NDgsImV4cCI6MTY5NTM2NDI0OH0.5gepNiVnuLWo2L0s87jHnQ7cjSPAOd5NlVPXM9Qge5I",
         },
       });
-      const bookArray = await response.json();
-      const commentsWithRateData = bookArray.map(book => ({
-        comment: book.comment,
-        rate: book.rate,
-      }));
-      console.log(this.state.comments);
 
-      if (response.ok) {
+      if (!response.ok) {
+        throw new Error("Non è stato possibile recuperare i commenti");
+      }
+
+      const commentData = await response.json();
+
+      if (commentData && commentData.comment && commentData.rate) {
+        const commentWithRateData = {
+          comment: commentData.comment,
+          rate: commentData.rate,
+        };
+
         this.setState({
-          commentsWithRate: commentsWithRateData,
+          commentsWithRate: [commentWithRateData],
         });
+      } else {
+        throw new Error("La risposta non contiene un commento valido");
       }
     } catch (error) {
       console.log(error);
@@ -41,7 +49,7 @@ class CommentArea extends Component {
     return (
       <>
         <CommentList comments={this.state.commentsWithRate} />
-        <AddComment />
+        <AddComment asin={this.state.asin} />
       </>
     );
   }

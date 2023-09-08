@@ -1,6 +1,7 @@
 import { Badge, ListGroup } from "react-bootstrap";
 
 function SingleComment({ comment }) {
+  console.log(comment);
   return (
     <ListGroup>
       <ListGroup.Item className="d-flex justify-content-between align-items-center">
