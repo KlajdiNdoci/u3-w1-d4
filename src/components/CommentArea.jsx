@@ -23,6 +23,7 @@ class CommentArea extends Component {
       }
 
       const commentData = await response.json();
+      console.log(commentData);
 
       if (commentData && commentData.comment && commentData.rate) {
         const commentWithRateData = {

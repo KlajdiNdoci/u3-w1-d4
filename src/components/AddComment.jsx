@@ -33,9 +33,9 @@ class AddComment extends Component {
         headers: {
           Authorization:
             "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGU4NTNlZGMwMzRmZjAwMTQwM2Y0ZDYiLCJpYXQiOjE2OTQxMDI2NjIsImV4cCI6MTY5NTMxMjI2Mn0.Mk0t8rb1719rIOPh1DMVaKkIsaA2B_zRun6l4snnTqU",
-          "Content-Type": "application/json", // Aggiunto il tipo di contenuto
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(this.state.comment), // Invia solo il commento dallo stato
+        body: JSON.stringify(this.state.comment),
       });
     } catch (error) {
       console.log(error);
